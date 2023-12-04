@@ -7,18 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    img {
+        width: 100px;
+    }
+</style>
 
 <body>
     <div id="app">{{message}}
-        <div>{{count}}</div>
-        <button v-on:click = 'count++'>增加(完整寫法)</button>
+        <div>數字:{{count}}</div>
+        <hr>
+        <button v-on:click="count++">增加(完整寫法)</button>
         <div></div>
-        <button @click = 'count++'>增加(簡易寫法)</button>
+        <button @click="count++">增加(簡易寫法)</button>
         <div></div>
-        <button @click = 'add()'>增加(涵式寫法)</button>
+        <button @click="add()">增加(涵式寫法)</button>
         <div></div>
+        <hr>
         <input type="text" v-model="input">
         <div>{{input}}</div>
+        <hr>
+        <div v-show="count > 2">
+            <button @click="level++">增加等級</button>
+            <button @click="level--">減少等級</button>
+            <hr>
+            <img v-if="level<5" src="./img/kai.jpg" alt="1">
+            <img v-else-if="level<10" src="./img/rne.jpg" alt="2">
+            <img v-else src="./img/rpa.jpg" alt="3">
+        </div>
+        <img :src="img" alt="" @click="imgChange()">
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -32,14 +49,29 @@
                 return {
                     message: 'Hello Vue!',
                     count: 0,
-                    input:'雙向綁定'
+                    level: 1,
+                    input: '雙向綁定',
+                    img: './img/img_1.jpg',
+                    key: 1,
                 }
             },
 
             methods: {
-                add(){
+                add() {
                     this.count++
-                }
+                },
+                imgChange() {
+                    if (this.key === 1) {
+                        this.img = './img/img_1.jpg';
+                        this.key = 2;
+                    } else if (this.key === 2) {
+                        this.img = './img/img_2.jpg';
+                        this.key = 3;
+                    } else {
+                        this.img = './img/img_3.jpg';
+                        this.key = 1;
+                    }
+                },
             },
 
 
