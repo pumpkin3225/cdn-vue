@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .card {
+        border: 1px solid;
+        width: 100px;
+        padding: 15px 20px;
+    }
+
+    .cardimg {
+        width: 100%;
+    }
+
+    .cardimg img {
+        width: 100%;
+    }
+
+    form {
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        <form @submit.prevent="submitData()">
+            Name: <input v-model="name" type="text">
+            Power: <input v-model="power" type="number">
+            <button type="submit" >submit</button>
+        </form>
+        <div class="container">
+            <div v-for="item in southPark" :key="item.id" class="card">
+                <div class="cardimg">
+                    <img :src="imgChange(item.power)" alt="">
+                </div>
+                <div class="carddata">
+                    <p>name: {{item.name}}</p>
+                    <p>power: {{item.power}}</p>
+                    <hr>
+                    <button @click="item.power++">PowerPlus</button>
+                    <button @click="item.power--">PowerMinus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    southPark: [{
+                        id: 1,
+                        name: 'kai',
+                        power: '10',
+
+                    },
+                    {
+                        id: 2,
+                        name: 'rne',
+                        power: '15',
+
+                    },
+                    {
+                        id: 3,
+                        name: 'rpa',
+                        power: '20',
+
+                    }
+                    ],
+                    name:'',
+                    power:0,
+
+                }
+            },
+            methods: {
+                imgChange(power) {
+                    if (power <= 10) {
+                        return './img/kai.jpg'
+                    } else if (power <= 15) {
+                        return './img/rne.jpg'
+                    } else {
+                        return './img/rpa.jpg'
+                    }
+                },
+                submitData() {
+                    this.southPark.push({
+                        id: this.southPark.length + 1,
+                        name:this.name,
+                        power:this.power,
+                    })
+                },
+            },
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

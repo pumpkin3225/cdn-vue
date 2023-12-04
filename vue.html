@@ -11,6 +11,14 @@
     img {
         width: 100px;
     }
+
+    .blue {
+        color: blue;
+    }
+
+    .red {
+        color: red;
+    }
 </style>
 
 <body>
@@ -30,6 +38,8 @@
         <div v-show="count > 2">
             <button @click="level++">增加等級</button>
             <button @click="level--">減少等級</button>
+            <hr>
+            <div :class="textColor()">Level:{{level}}</div>
             <hr>
             <img v-if="level<5" src="./img/kai.jpg" alt="1">
             <img v-else-if="level<10" src="./img/rne.jpg" alt="2">
@@ -70,6 +80,15 @@
                     } else {
                         this.img = './img/img_3.jpg';
                         this.key = 1;
+                    }
+                },
+                textColor() {
+                    if (this.level > 4 && this.level < 10) {
+                        return 'blue';
+                    } else if (this.level > 9) {
+                        return 'red';
+                    } else {
+                        return '';
                     }
                 },
             },
